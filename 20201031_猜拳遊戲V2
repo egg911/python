@@ -1,0 +1,44 @@
+import random
+
+def PSS(winRate):
+
+    table = ["布", "剪刀", "石頭", "布", "剪刀"]
+    gamelist = [-1,1,2,3]
+    my = int(input('請輸入1=剪刀, 2=石頭, 3=布, -1=結束 : '))
+    rnd = random.random()
+    if(my == -1):
+        return -1
+    elif(my not in gamelist):
+        print("靠北 不要亂試bug")
+        return [0,0]
+    elif (random.random() < 0.33):
+        print ("平手")
+        return [0, 0]
+    if(rnd<winRate):
+        print ("你贏了對手出 " + table[my-1] + " 你出 " + table[my])
+        return [1,0]
+    else:
+        print ("你輸了對手出 " + table[my+1] + " 你出 " + table[my])
+        return [0,1]
+
+if __name__ == '__main__':
+    
+    winLoseList = [0,0]
+    winRate = 0.5
+    result = 0
+    while (winLoseList[0] != 3 and winLoseList[1] != 3 and result != -1):
+        if(winLoseList[0] == 2):
+            winRate = 0.3
+            print("電腦變強了勝率70%")
+        result = PSS(winRate)
+        if(result == -1):
+            exit
+        else:
+            winLoseList[0] += result[0]
+            winLoseList[1] += result[1]
+            print("戰況激烈現在 你:電腦是 " + str(winLoseList[0]) + ":" + str(winLoseList[1]))
+    
+    if(winLoseList[0] == 3):
+        print("你贏了最終比數你:電腦是 " + str(winLoseList[0]) + ":" + str(winLoseList[1]))
+    else:
+        print("你輸了最終比數你:電腦是 " + str(winLoseList[0]) + ":" + str(winLoseList[1]))
